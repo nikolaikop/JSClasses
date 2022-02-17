@@ -76,12 +76,8 @@ class Library {
 
     findBookBy(type, value) {
         for (let i = 0; i < this.books.length; i++) {
-            let book = Object.entries(this.books[i]);
-            for (let j = 0; j < book.length; j++) {
-                if (book[j][0] === type && book[j][1] === value)
-                return this.books[i];
+            if (this.books[i][type] === value) return this.books[i];
             }
-        } 
         return null;
     }  
 
@@ -118,11 +114,15 @@ class Student{
       return sum / this.subjects[subjectName].length;
     }
     
-    getAverage(){
-      let sum = 0;
-      let subjectNames = Object.keys(this.subjects);
-      subjectNames.forEach(item => sum += this.getAverageBySubject(item))
-      return sum / subjectNames.length;
+    getAverage() {
+        let sum = 0;
+        let marksAmount = 0;
+        let subjectNames = Object.keys(this.subjects);
+        subjectNames.forEach(item => {
+        sum += this.getAverageBySubject(item) * this.subjects[item].length;
+        marksAmount += this.subjects[item].length;
+        });
+        return sum / marksAmount;
     }
     
     exclude(reason) {
